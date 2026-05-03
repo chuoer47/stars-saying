@@ -1,42 +1,51 @@
-# Mobile App Packaging
+# 手机应用打包
 
-The current project can be packaged as a mobile app, but model keys must remain on a server.
+[English version](./MOBILE_APP_en.md)
 
-## Recommended Path
+当前项目可以包装成手机应用，但模型密钥必须继续留在服务端，不能打进移动端安装包。
 
-1. Ship the web app first.
-2. Add PWA metadata and install prompts.
-3. Deploy the Next.js server routes on Vercel or another server.
-4. Wrap the deployed app with Capacitor for Android/iOS.
+## 推荐路径
 
-The mobile shell should call the deployed web/API backend. Do not embed `.env` secrets into a mobile bundle.
+1. 先发布 Web 版本。
+2. 增加 PWA metadata、图标和安装提示。
+3. 将 Next.js server routes 部署到 Vercel 或其他服务端平台。
+4. 用 Capacitor 将已部署的 Web 应用包装成 Android/iOS 应用。
 
-## Why Not Fully Offline?
+移动端壳应用应调用已部署的 Web/API 后端。不要把 `.env` 密钥嵌入移动端 bundle。
 
-The app includes server-side routes for:
+## 为什么不建议完全离线
 
-- AI chat
-- random exploration generation
-- official astronomy API adapters
-- settings/key status
+应用包含这些服务端能力：
 
-These flows need server-side secrets and external network access. A fully offline app would need a different architecture and would rely only on local fallback content.
+- AI 聊天
+- 随机星体探索生成
+- 官方天文 API 适配
+- 设置页密钥状态
 
-## Voice Notes
+这些流程需要服务端密钥和外部网络访问。完全离线版本需要另一套架构，并且只能依赖本地兜底内容。
 
-Browser speech synthesis varies by device. For a polished packaged app, consider:
+## 语音体验说明
 
-- native iOS/Android TTS through a Capacitor plugin
-- cloud TTS that generates audio server-side
-- downloadable voice assets for fixed educational narration
+浏览器语音合成在不同设备上的表现差异较大。如果要做更正式的移动端版本，可以考虑：
 
-## Store Readiness
+- 通过 Capacitor 插件使用 iOS/Android 原生 TTS
+- 服务端云 TTS 生成音频
+- 为固定课程内容准备可下载语音资源
 
-Before submitting to app stores, prepare:
+## 应用商店准备
 
-- privacy policy
-- child safety and data handling explanation
-- parent/teacher contact path
-- clear statement that local wishes and memory are stored on device
-- review of any analytics or cloud sync added later
+提交应用商店前，建议准备：
 
+- 隐私政策
+- 儿童安全与数据处理说明
+- 家长/老师联系入口
+- 明确说明愿望和记忆默认保存在本机
+- 如果后续增加统计或云同步，需要单独审查
+
+## 最小落地方案
+
+短期展示可以先使用手机浏览器打开 Vercel 链接：
+
+- https://stars-saying.vercel.app
+
+这已经能覆盖移动端演示、扫码访问和比赛展示。真正上架前再做 PWA/Capacitor。

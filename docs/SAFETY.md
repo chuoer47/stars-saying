@@ -1,38 +1,44 @@
-# Child Safety And Privacy
+# 儿童安全与隐私
 
-`stars-saying` is designed as a child-facing astronomy learning app.
+[English version](./SAFETY_en.md)
 
-## Current Safety Rules
+`stars-saying` 是面向儿童的天文学习应用。安全目标是让孩子在不需要账户、不公开个人信息的前提下，进行温和、可控的天文探索。
 
-- No account is required for the child flow.
-- Chat stays around astronomy learning, star stories, observation guidance, and gentle companionship.
-- Dangerous, sexual, hateful, illegal, self-harm, and personal-data requests are refused or redirected.
-- Wishes and memory entries are stored locally in the browser.
-- The wish wall is local-first and blocks common personal information patterns.
-- Adult/internal pages are behind `/settings`.
+## 当前安全规则
 
-## Personal Information
+- 儿童主流程不需要账户。
+- 聊天范围保持在天文学习、星空故事、观测引导和温柔陪伴。
+- 危险、色情、仇恨、违法、自伤和个人信息请求会被拒绝或温和引导。
+- 愿望和星体记忆保存在浏览器本地。
+- 愿望墙本地优先，并拦截常见个人信息模式。
+- 成人/内部页面通过 `/settings` 保护。
 
-The app should not ask children for:
+## 不应收集的个人信息
 
-- real names
-- phone numbers
-- addresses
-- schools or classes
-- email addresses
-- social handles
-- identity numbers
+应用不应向儿童索要：
 
-## Science Boundaries
+- 真实姓名
+- 电话号码
+- 家庭地址
+- 学校或班级
+- 邮箱地址
+- 社交账号
+- 身份证件号码
 
-- Mythology and culture can be included, but they must be clearly separated from scientific facts.
-- When official data is unavailable, the UI should use local reviewed fallback content rather than invent details.
-- If an answer is uncertain, it should say so and guide the child to a safer question or knowledge card.
+## 科学边界
 
-## Before Public Release
+- 可以介绍神话和文化故事，但必须与科学事实清楚区分。
+- 官方数据不可用时，使用本地审核过的兜底内容，不编造具体参数。
+- 如果答案不确定，应明确说明，并引导孩子查看更安全的问题或知识卡片。
 
-- Set a strong `SETTINGS_PASSWORD`.
-- Review all visible copy for child-friendly wording.
-- Confirm raw secrets never appear in HTML or client JavaScript.
-- Confirm public routes do not expose adult/internal pages without settings access.
+## 公开发布前
 
+- 设置强 `SETTINGS_PASSWORD`。
+- 检查所有可见文案是否适合儿童。
+- 确认原始密钥不会出现在 HTML 或客户端 JavaScript 中。
+- 确认公开路由不会绕过设置密码暴露成人/内部页面。
+- 如果后续接入云同步或统计，需要重新审查隐私说明。
+
+## 家长/老师说明
+
+当前版本默认本地保存儿童内容，不提供公开社区、账户系统或云同步。浏览器清理站点数据后，本机愿望、记忆和聊天历史可能会丢失。
