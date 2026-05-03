@@ -1,6 +1,10 @@
 # Stars Saying / 假设星星会说话
 
-[中文 README](./README.md)
+<p align="center">
+  <a href="./README.md">中文</a> · <strong>English</strong>
+</p>
+
+> GitHub renders the root `README.md` on the repository homepage by default. Click `中文` above to return to the Chinese homepage README.
 
 Stars Saying is a mobile-first astronomy learning web app for children. Children can draw a random cosmic friend, chat with personified celestial bodies, read knowledge cards, study short astronomy lessons, and create local star-wish cards.
 
