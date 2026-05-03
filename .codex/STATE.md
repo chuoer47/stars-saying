@@ -219,7 +219,7 @@ Completed the requested settings and voice follow-up:
   also expose explicit stop states.
 - `src/lib/model-config.ts` reads KAFU model configuration from `.env` first,
   then OpenAI/GPT-compatible fallback variables, then local fallback.
-- `.env` has `SETTINGS_PASSWORD=stars2026` for the adult settings area.
+- `.env` must have `SETTINGS_PASSWORD` for the adult settings area.
 - `/settings` is password protected and shows competition explanation plus
   model/key status without revealing raw secrets.
 - `/account`, `/dashboard`, `/studio`, `/lab`, `/exhibition`, and `/intro` are
