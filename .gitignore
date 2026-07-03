@@ -41,3 +41,6 @@ target/
 .idea/
 *.swp
 *.swo
+
+# claude code
+.claude
