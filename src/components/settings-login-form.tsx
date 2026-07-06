@@ -1,4 +1,4 @@
-import { unlockSettings } from "@/app/settings/actions";
+import { unlockSettings } from "@/app/admin/actions";
 
 export function SettingsLoginForm({ hasError = false }: { hasError?: boolean }) {
   return (

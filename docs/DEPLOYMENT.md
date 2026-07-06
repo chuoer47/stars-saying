@@ -81,9 +81,9 @@ SETTINGS_PASSWORD=...
 - `/classroom`
 - `/wish`
 - `/wish-wall`
-- `/settings`
+- `/admin`
 
-`/settings` 应要求输入配置好的密码后才显示内部页面。
+`/admin` 应要求输入配置好的密码后才显示内部页面。
 
 ## 如何停止 Vercel 服务
 

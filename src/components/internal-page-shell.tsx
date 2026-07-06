@@ -13,7 +13,7 @@ export async function InternalPageShell({ pageKey }: InternalPageShellProps) {
   return (
     <main className="mx-auto min-h-screen w-full max-w-md px-5 pb-12 pt-8">
       <div className="flex items-center justify-between gap-3">
-        <a href="/settings" className="text-sm text-sky-200">
+        <a href="/admin" className="text-sm text-sky-200">
           ← 返回设置
         </a>
         <a href="/" className="text-sm text-slate-300">

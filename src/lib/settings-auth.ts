@@ -18,6 +18,6 @@ export async function isSettingsUnlocked() {
 
 export async function requireSettingsAccess() {
   if (!(await isSettingsUnlocked())) {
-    redirect("/settings");
+    redirect("/admin");
   }
 }
