@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import { EmptyState } from "@/components/empty-state";
 import type { ClassroomModule } from "@/data/classroom-modules";
 
 type LearningFilter = "all" | "todo" | "done";
@@ -54,9 +55,9 @@ export function ClassroomModuleList({ modules }: ClassroomModuleListProps) {
   return (
     <div className="space-y-4">
       <section className="rounded-[1.75rem] border border-emerald-200/20 bg-emerald-200/10 p-5 text-sm leading-7 text-emerald-50">
-        <p className="text-sm text-emerald-100">学习记录</p>
+        <p className="text-sm text-emerald-100">📝 学习记录</p>
         <p className="mt-2">
-          已学 {doneCount}/{modules.length} 节。本记录只保存在当前设备里。
+          已学 {doneCount}/{modules.length} 节。学习记录留在这里陪你。
         </p>
         <div className="mt-4 grid grid-cols-3 gap-2">
           {[
@@ -124,9 +125,11 @@ export function ClassroomModuleList({ modules }: ClassroomModuleListProps) {
       </section>
 
       {filteredModules.length === 0 ? (
-        <section className="rounded-[1.75rem] border border-dashed border-white/10 bg-white/5 p-6 text-sm text-slate-200">
-          这一组暂时没有课程，换一个筛选看看。
-        </section>
+        <EmptyState
+          icon="📖"
+          title="这一组暂时没有课程"
+          description="换一个筛选看看，或者先完成其他课堂内容。"
+        />
       ) : null}
     </div>
   );

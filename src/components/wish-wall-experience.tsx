@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import { EmptyState } from "@/components/empty-state";
 import { celestialBodies } from "@/data/celestial-bodies";
 
 interface WishRecord {
@@ -86,7 +87,7 @@ export function WishWallExperience() {
       <section className="rounded-[1.75rem] border border-emerald-200/20 bg-emerald-200/10 p-5 text-sm leading-7 text-emerald-50">
         <p className="text-sm font-medium text-emerald-100">愿望墙规则</p>
         <p className="mt-2">
-          这里展示的是这台设备里保存的愿望卡，不会自动发布到互联网上。包含联系方式、学校、地址或危险内容的愿望不会出现在墙上。
+          愿望卡只在这里展示，不会跑到别的地方去。写有电话、学校、地址或让人不舒服的内容不会出现。
         </p>
       </section>
 
@@ -103,13 +104,13 @@ export function WishWallExperience() {
       ) : null}
 
       {hasHydrated && visibleWishes.length === 0 ? (
-        <section className="rounded-[2rem] border border-dashed border-white/15 bg-white/8 p-6 text-sm leading-7 text-slate-200">
-          <p className="text-lg font-semibold text-white">愿望墙还空着</p>
-          <p className="mt-2">先做一张愿望卡，星星的回应就会来到这里。</p>
-          <a href="/wish" className="mt-4 inline-flex rounded-2xl bg-amber-300 px-4 py-3 text-sm font-semibold text-slate-950">
-            去生成愿望卡
-          </a>
-        </section>
+        <EmptyState
+          icon="🌈"
+          title="愿望墙还空着"
+          description="先做一张愿望卡，星星的回应就会来到这里。"
+          actionLabel="去生成愿望卡"
+          actionHref="/wish"
+        />
       ) : null}
 
       {visibleWishes.length > 0 ? (

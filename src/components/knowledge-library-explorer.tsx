@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { celestialBodies, categoryLabels } from "@/data/celestial-bodies";
 import { knowledgeCards } from "@/data/knowledge-cards";
+import { EmptyState } from "@/components/empty-state";
 import { semanticSearch } from "@/lib/retrieval";
 
 type LibraryFilter = "all" | "body" | "concept" | "culture";
@@ -78,6 +79,7 @@ function buildItems(): LibraryItem[] {
 export function KnowledgeLibraryExplorer() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<LibraryFilter>("all");
+  const [visibleCount, setVisibleCount] = useState(8);
 
   const items = useMemo(() => buildItems(), []);
 
@@ -99,6 +101,13 @@ export function KnowledgeLibraryExplorer() {
       return matchesFilter && matchesQuery;
     });
   }, [filter, items, query]);
+
+  useEffect(() => {
+    setVisibleCount(8);
+  }, [filter, query]);
+
+  const visibleItems = filteredItems.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredItems.length;
 
   const semanticResults = useMemo(() => semanticSearch(query, 5), [query]);
 
@@ -152,9 +161,14 @@ export function KnowledgeLibraryExplorer() {
           <p className="text-sm text-sky-200">热门关键词</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {topKeywords.map((keyword) => (
-              <span key={keyword} className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white">
+              <button
+                key={keyword}
+                type="button"
+                onClick={() => setQuery(keyword)}
+                className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white transition hover:border-sky-200/30 hover:bg-sky-300/15"
+              >
                 {keyword}
-              </span>
+              </button>
             ))}
           </div>
         </section>
@@ -184,7 +198,7 @@ export function KnowledgeLibraryExplorer() {
               ))
             ) : (
               <p className="rounded-2xl border border-dashed border-white/10 bg-white/5 px-4 py-3 text-sm leading-6 text-sky-50/90">
-                暂无语义联想结果，可以换一个更具体的词，例如“月相变化”或“北方导航”。
+                暂无语义联想结果，可以换一个更具体的词，例如「月相变化」或「北方导航」。
               </p>
             )}
           </div>
@@ -192,8 +206,8 @@ export function KnowledgeLibraryExplorer() {
       ) : null}
 
       <section className="space-y-3">
-        {filteredItems.length > 0 ? (
-          filteredItems.map((item) => (
+        {visibleItems.length > 0 ? (
+          visibleItems.map((item) => (
             <article key={item.id} className="rounded-[1.75rem] border border-white/10 bg-slate-950/25 p-5 shadow-lg">
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -231,10 +245,21 @@ export function KnowledgeLibraryExplorer() {
             </article>
           ))
         ) : (
-          <div className="rounded-[1.75rem] border border-dashed border-white/10 bg-slate-950/20 p-6 text-sm leading-7 text-slate-300">
-            没有找到匹配内容。试试“月相”“土星环”“神话”“导航”等关键词。
-          </div>
+          <EmptyState
+              icon="🔍"
+              title="没有找到匹配内容"
+              description="试试「月相」「土星环」「神话」「导航」等关键词。"
+            />
         )}
+        {hasMore ? (
+          <button
+            type="button"
+            onClick={() => setVisibleCount((c) => c + 8)}
+            className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white transition hover:bg-white/10"
+          >
+            加载更多（还剩 {filteredItems.length - visibleCount} 条）
+          </button>
+        ) : null}
       </section>
     </div>
   );

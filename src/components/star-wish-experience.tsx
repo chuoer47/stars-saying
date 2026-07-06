@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { EmptyState } from "@/components/empty-state";
 import { celestialBodies } from "@/data/celestial-bodies";
 
 interface WishRecord {
@@ -22,7 +23,7 @@ function createWishReply(bodyId: string, wish: string) {
   const trimmedWish = wish.trim();
 
   if (unsafePattern.test(trimmedWish)) {
-    return `${body.name}把光放低一点：这个愿望里可能包含伤害、危险或不适合扩散的内容。我不能帮你强化它，但愿意陪你把它改写成更安全的版本，比如“希望今晚先照顾好自己，并向可信的人求助”。`;
+    return `${body.name}把光放低一点：这个愿望里可能包含伤害、危险或不适合扩散的内容。我不能帮你强化它，但愿意陪你把它改写成更安全的版本，比如"希望今晚先照顾好自己，并向可信的人求助"。`;
   }
 
   if (offTopicPattern.test(trimmedWish)) {
@@ -30,10 +31,10 @@ function createWishReply(bodyId: string, wish: string) {
   }
 
   if (personalInfoPattern.test(trimmedWish)) {
-    return `${body.name}把愿望卡轻轻合上：愿望里好像有真实联系方式、学校或地址一类的信息。为了保护你，请把这些内容删掉，再写成“希望我今天完成一个小目标”这样的安全愿望。`;
+    return `${body.name}把愿望卡轻轻合上：愿望里好像有真实联系方式、学校或地址一类的信息。为了保护你，请把这些内容删掉，再写成"希望我今天完成一个小目标"这样的安全愿望。`;
   }
 
-  return `${body.avatar} ${body.name}收到了你的愿望：“${trimmedWish}”。我会用${body.tone}的方式提醒你：愿望不是魔法保证，而是一颗可以被你每天靠近的小星点。今晚先做一件很小的事，把它变成真实轨道吧。`;
+  return `${body.avatar} ${body.name}收到了你的愿望："${trimmedWish}"。我会用${body.tone}的方式提醒你：愿望不是魔法保证，而是一颗可以被你每天靠近的小星点。今晚先做一件很小的事，把它变成真实轨道吧。`;
 }
 
 function loadWishes() {
@@ -325,7 +326,7 @@ export function StarWishExperience() {
 
       await navigator.clipboard.writeText(`${shareText}\n\n体验链接：${window.location.href}`);
       setCopiedWishId(record.id);
-      setToast("当前浏览器不支持系统分享，已复制文字和链接。");
+      setToast("已帮你复制好啦，可以粘贴分享给朋友。");
     } catch {
       await copyWishCard(record);
     }
@@ -390,7 +391,7 @@ export function StarWishExperience() {
           className="mt-4 w-full rounded-3xl border border-white/10 bg-slate-950/40 px-4 py-4 text-sm leading-7 text-white outline-none placeholder:text-slate-500"
         />
         <div className="mt-3 flex items-center justify-between gap-3">
-          <p className="text-xs leading-5 text-sky-100/80">不要写真实姓名、电话、学校或地址。愿望会保存在当前设备，最多保留 12 张卡片。</p>
+          <p className="text-xs leading-5 text-sky-100/80">不要写真名、电话、学校或地址哦。最多存 12 张愿望卡。</p>
           <button type="submit" className="rounded-2xl bg-sky-300 px-5 py-3 text-sm font-medium text-slate-950">
             生成愿望卡
           </button>
@@ -452,9 +453,11 @@ export function StarWishExperience() {
           </div>
         </section>
       ) : (
-        <section className="rounded-[1.75rem] border border-dashed border-white/10 bg-slate-950/20 p-6 text-sm leading-7 text-slate-300">
-          {hasHydrated ? "还没有愿望卡。写下一个愿望后，星星会给你一段安全、温柔、可分享的回应。" : "正在恢复你的愿望卡……"}
-        </section>
+        <EmptyState
+          icon="🎨"
+          title={hasHydrated ? "还没有愿望卡" : "正在恢复你的愿望卡……"}
+          description={hasHydrated ? "写下一个愿望后，星星会给你一段安全、温柔、可分享的回应。" : "请稍等片刻……"}
+        />
       )}
 
       {wishes.length > 1 ? (

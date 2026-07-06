@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import type { CelestialCategory } from "@/types/celestial";
 import { categoryLabels } from "@/data/celestial-bodies";
+import { EmptyState } from "@/components/empty-state";
 import { loadExplorationMemory } from "@/lib/exploration-memory";
 import type { ExplorationMemoryEntry } from "@/types/exploration";
 
@@ -169,7 +170,7 @@ export function CelestialSelection({
             <p className="text-sm text-sky-200">我的小星标</p>
             <h2 className="mt-1 text-lg font-semibold text-white">{nickname}，今晚想先认识哪颗星？</h2>
             <p className="mt-2 text-sm leading-6 text-sky-100/90">
-              你的昵称、头像和收藏只保存在这台设备里，方便下次继续找星星。
+              你的昵称、头像和收藏会留在这里，下次来还在。
             </p>
           </div>
         </div>
@@ -271,7 +272,7 @@ export function CelestialSelection({
             ))}
           </div>
           <p className="mt-2 text-xs leading-5 text-amber-50/75">
-            这些星体来自随机抽星，保存在这台设备里，所以会显示在这里而不是固定星体图鉴里。
+            这些是你自己抽到的星星朋友，都帮你收在这里啦。
           </p>
         </section>
       ) : null}
@@ -297,9 +298,11 @@ export function CelestialSelection({
       </div>
 
       {bodies.length === 0 ? (
-        <div className="rounded-[1.75rem] border border-dashed border-white/10 bg-slate-950/20 p-6 text-sm leading-7 text-slate-300">
-          这一组星体还在整理星轨中。先试试“推荐”或“全部”，更快进入演示主流程。
-        </div>
+        <EmptyState
+          icon="🌌"
+          title="这一组星体还在整理星轨中"
+          description="先试试推荐或全部，更快进入演示主流程。"
+        />
       ) : null}
 
       <div className="space-y-5">

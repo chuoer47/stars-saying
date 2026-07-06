@@ -59,7 +59,7 @@ export function OfficialKnowledgePanel({ bodyId, bodyName }: OfficialKnowledgePa
         }
       } catch {
         if (isMounted) {
-          setError("官方资料暂时没有连上。你仍然可以先看本地知识卡片。");
+          setError("资料还在路上，先看看已有的知识卡片吧。");
         }
       } finally {
         if (isMounted) {
@@ -78,8 +78,8 @@ export function OfficialKnowledgePanel({ bodyId, bodyName }: OfficialKnowledgePa
   if (isLoading) {
     return (
       <section className="rounded-[1.75rem] border border-sky-200/20 bg-sky-100/10 p-5 text-sm leading-7 text-sky-50">
-        <p className="text-sm text-sky-200">官方小资料</p>
-        <p className="mt-2">正在帮你向 NASA/JPL 的资料库借一束光……</p>
+        <p className="text-sm text-sky-200">补充小知识</p>
+        <p className="mt-2">正在帮你收集更多有趣的知识……</p>
       </section>
     );
   }
@@ -87,8 +87,8 @@ export function OfficialKnowledgePanel({ bodyId, bodyName }: OfficialKnowledgePa
   if (error || !data) {
     return (
       <section className="rounded-[1.75rem] border border-amber-200/20 bg-amber-200/10 p-5 text-sm leading-7 text-amber-50">
-        <p className="text-sm text-amber-100">官方小资料</p>
-        <p className="mt-2">{error ?? "官方资料暂时不可用。"}</p>
+        <p className="text-sm text-amber-100">补充小知识</p>
+        <p className="mt-2">{error ?? "更多知识还在路上。"}</p>
       </section>
     );
   }
@@ -99,12 +99,9 @@ export function OfficialKnowledgePanel({ bodyId, bodyName }: OfficialKnowledgePa
     <section className="rounded-[1.75rem] border border-sky-200/20 bg-sky-100/10 p-5 text-sm leading-7 text-sky-50">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-sm text-sky-200">官方小资料</p>
-          <h2 className="mt-1 text-lg font-semibold text-white">从 NASA/JPL 找到的线索</h2>
+          <p className="text-sm text-sky-200">补充小知识</p>
+          <h2 className="mt-1 text-lg font-semibold text-white">找到的一些有趣线索</h2>
         </div>
-        <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white">
-          {data.status === "live" ? "已连上" : "本地备用"}
-        </span>
       </div>
 
       <p className="mt-3 text-sky-50/90">{data.message}</p>
@@ -114,7 +111,7 @@ export function OfficialKnowledgePanel({ bodyId, bodyName }: OfficialKnowledgePa
           <div className="relative h-72 w-full">
             <Image
               src={mainImage.url}
-              alt={`${bodyName}相关官方图片：${mainImage.title}`}
+              alt={`${bodyName}的图片：${mainImage.title}`}
               fill
               sizes="(max-width: 768px) 100vw, 420px"
               className="object-cover"

@@ -329,14 +329,14 @@ export function getChatRuntimeStatus(): ChatRuntimeStatus {
     return {
       mode: "live-ai",
       label: "星星会认真想一想",
-      detail: `服务器已经准备好 AI 回答，会优先调用 ${getModelName()}，并继续受到知识卡片和儿童安全规则约束。`,
+      detail: "星星会参考知识卡片，用温柔的方式回答你的问题。",
     };
   }
 
   return {
     mode: "local-fallback",
     label: "星星先用知识卡回答",
-    detail: "当前没有检测到服务器端模型密钥，星星会先使用本地已审核知识卡回答，保证孩子仍然能安全学习。",
+    detail: "星星正在用已经准备好的知识卡片来回答你。",
   };
 }
 

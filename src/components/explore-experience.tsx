@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
+import { EmptyState } from "@/components/empty-state";
 import { categoryLabels } from "@/data/celestial-bodies";
 import { loadExplorationMemory, upsertExplorationMemory } from "@/lib/exploration-memory";
 import { useGentleSpeech } from "@/lib/use-gentle-speech";
@@ -10,7 +11,6 @@ import type { ExplorationMemoryEntry } from "@/types/exploration";
 
 interface ExploreRandomResponse {
   entry: ExplorationMemoryEntry;
-  model: string;
 }
 
 export function ExploreExperience() {
@@ -20,7 +20,6 @@ export function ExploreExperience() {
   const [isLoading, setIsLoading] = useState(false);
   const [isAnswering, setIsAnswering] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [modelLabel, setModelLabel] = useState("local-fallback");
   const speech = useGentleSpeech();
 
   useEffect(() => {
@@ -43,7 +42,6 @@ export function ExploreExperience() {
 
       const data = (await response.json()) as ExploreRandomResponse;
       setEntry(data.entry);
-      setModelLabel(data.model);
       setMemory(upsertExplorationMemory(data.entry));
     } catch {
       setError("星体探索器刚刚有点忙，请稍后再抽一次。");
@@ -90,10 +88,10 @@ export function ExploreExperience() {
   return (
     <div className="space-y-5">
       <section className="rounded-[2rem] border border-white/10 bg-white/8 p-5">
-        <p className="text-sm text-sky-200">随机抽星</p>
-        <h2 className="mt-1 text-2xl font-semibold text-white">让官方资料库送来一颗新星体</h2>
+        <p className="text-sm text-sky-200">🎲 随机抽星</p>
+        <h2 className="mt-1 text-2xl font-semibold text-white">让星空送来一位新朋友</h2>
         <p className="mt-3 text-sm leading-7 text-sky-50/85">
-          每次抽取会读取 NASA/JPL/系外行星档案里的资料，再生成适合儿童理解的星体小性格，并自动放进本机记忆库。
+          每次会认识一位新朋友，了解它的故事和性格，自动存进你的星星收藏。
         </p>
         <button
           type="button"
@@ -112,9 +110,11 @@ export function ExploreExperience() {
       ) : null}
 
       {!entry ? (
-        <section className="rounded-[1.75rem] border border-dashed border-white/15 bg-white/5 p-6 text-sm leading-7 text-slate-200">
-          还没有抽星。点一下按钮，星体探索器会把一颗新的宇宙朋友带到这里。
-        </section>
+        <EmptyState
+          icon="🔭"
+          title="还没有抽星"
+          description="点一下按钮，星体探索器会把一颗新的宇宙朋友带到这里。"
+        />
       ) : null}
 
       {entry ? (
@@ -123,7 +123,7 @@ export function ExploreExperience() {
             <div className="relative h-56 w-full">
               <Image
                 src={entry.imageUrl}
-                alt={`${entry.name}的官方资料图片`}
+                alt={`${entry.name}的图片`}
                 fill
                 sizes="(max-width: 768px) 100vw, 420px"
                 className="object-cover"
@@ -140,9 +140,6 @@ export function ExploreExperience() {
                 </h2>
                 <p className="mt-1 text-xs text-sky-100/70">{entry.englishName}</p>
               </div>
-              <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white">
-                {entry.officialStatus === "live" ? "官方资料" : "本地备用"}
-              </span>
             </div>
 
             <div className="mt-5 flex gap-3 overflow-x-auto pb-2 snap-x">
@@ -177,7 +174,7 @@ export function ExploreExperience() {
             </div>
 
             <details className="mt-4 rounded-3xl border border-white/10 bg-white/5 p-4">
-              <summary className="cursor-pointer text-sm font-medium text-white">展开官方事实</summary>
+              <summary className="cursor-pointer text-sm font-medium text-white">了解更多</summary>
               <dl className="mt-4 grid gap-3">
                 {entry.facts.map((fact) => (
                   <div key={`${fact.label}-${fact.value}`} className="rounded-2xl bg-white/8 px-4 py-3 text-sm">
@@ -217,7 +214,7 @@ export function ExploreExperience() {
             </section>
 
             <p className="mt-4 text-xs leading-6 text-slate-400">
-              已自动收录到本机记忆库。生成方式：{modelLabel === "local-fallback" ? "本地保底" : modelLabel}
+              已放进你的星星收藏。
             </p>
           </div>
         </section>

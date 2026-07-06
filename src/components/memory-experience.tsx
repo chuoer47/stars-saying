@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+import { EmptyState } from "@/components/empty-state";
 import { categoryLabels } from "@/data/celestial-bodies";
 import { loadExplorationMemory, saveExplorationMemory } from "@/lib/exploration-memory";
 import { stopSpeech } from "@/lib/speech";
@@ -33,6 +34,7 @@ interface SpeechWindow extends Window {
 
 export function MemoryExperience() {
   const [entries, setEntries] = useState<ExplorationMemoryEntry[]>([]);
+  const [hasHydrated, setHasHydrated] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [questions, setQuestions] = useState<Record<string, string>>({});
   const [activeListeningId, setActiveListeningId] = useState<string | null>(null);
@@ -43,6 +45,7 @@ export function MemoryExperience() {
 
   useEffect(() => {
     setEntries(loadExplorationMemory());
+    setHasHydrated(true);
   }, []);
 
   useEffect(() => {
@@ -144,22 +147,30 @@ export function MemoryExperience() {
     recognition.start();
   }
 
+  if (!hasHydrated) {
+    return (
+      <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 text-sm text-slate-200">
+        正在读取记忆库……
+      </section>
+    );
+  }
+
   if (!entries.length) {
     return (
-      <section className="rounded-[2rem] border border-dashed border-white/15 bg-white/8 p-6 text-sm leading-7 text-slate-200">
-        <p className="text-lg font-semibold text-white">记忆库还是空的</p>
-        <p className="mt-2">先去星体探索器随机抽一颗星，APP 会把它的科普说明和专属性格放到这里。</p>
-        <a href="/explore" className="mt-4 inline-flex rounded-2xl bg-amber-300 px-4 py-3 text-sm font-semibold text-slate-950">
-          去随机抽星
-        </a>
-      </section>
+      <EmptyState
+        icon="🔭"
+        title="记忆库还是空的"
+        description="先去星体探索器随机抽一颗星，APP 会把它的科普说明和专属性格放到这里。"
+        actionLabel="去随机抽星"
+        actionHref="/explore"
+      />
     );
   }
 
   return (
     <div className="space-y-5">
       <section className="rounded-[1.75rem] border border-emerald-200/20 bg-emerald-200/10 p-5 text-sm leading-7 text-emerald-50">
-        已收录 {entries.length} 个星体。记忆库只保存在当前设备里，方便孩子反复听、反复看。
+        收藏了 {entries.length} 位星星朋友。都在这里，随时回来看。
       </section>
 
       <section className="flex snap-x gap-4 overflow-x-auto pb-3">
@@ -172,7 +183,7 @@ export function MemoryExperience() {
               <div className="relative h-44 w-full">
                 <Image
                   src={entry.imageUrl}
-                  alt={`${entry.name}官方图片`}
+                  alt={`${entry.name}的图片`}
                   fill
                   sizes="(max-width: 768px) 88vw, 380px"
                   className="object-cover"
@@ -275,7 +286,7 @@ export function MemoryExperience() {
                   </button>
                 </div>
                 <p className="mt-3 text-xs leading-5 text-sky-50/75">
-                  这里的回答会先使用记忆库里已收录的官方事实和星体性格，不会要求填写真实姓名或联系方式。
+                  星星会记住自己的故事来回答你，不会问你的真实姓名和联系方式。
                 </p>
               </form>
 

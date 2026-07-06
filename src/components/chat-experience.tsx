@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { EmptyState } from "@/components/empty-state";
 import { canUseSpeechPlayback, speakGently, stopSpeech } from "@/lib/speech";
 import type { CelestialBody } from "@/types/celestial";
 import type { ChatMessage, ChatResponse, ChatRuntimeStatus } from "@/types/chat";
@@ -358,24 +359,19 @@ export function ChatExperience({ body, knowledgeSummary, initialRuntime }: ChatE
         </div>
 
         <div className="mt-4 rounded-3xl border border-sky-200/10 bg-sky-300/10 p-4 text-sm leading-7 text-sky-50">
-          <div className="flex flex-wrap items-center gap-2">
-            <p className="text-sm text-sky-200">星星怎样认真回答</p>
-            <span className="rounded-full border border-sky-100/20 bg-white/10 px-3 py-1 text-xs text-white">
-              {runtime.label}
-            </span>
-          </div>
-          <p className="mt-2">{runtime.detail}</p>
+          <p className="text-sm text-sky-200">星星怎样认真回答</p>
           <p className="mt-2">
-            每次回复都会先参考已经整理好的知识卡片。如果资料不够，星星会直接说“不确定”，不乱编答案。
+            每次回复都会先参考已经整理好的知识卡片。如果资料不够，星星会直接说「不确定」，不乱编答案。
           </p>
         </div>
 
         <div className="mt-4 space-y-3">
           {hasHydrated && messages.length === 0 ? (
-            <div className="rounded-3xl border border-dashed border-white/10 bg-white/5 p-4 text-sm leading-7 text-slate-300">
-              <p>星星正在等你先开口。你也可以点下面的小问题开始。</p>
-              <p className="mt-2 text-slate-400">问一个你真的好奇的问题，星星会慢慢回答。</p>
-            </div>
+            <EmptyState
+                icon="💬"
+                title="星星正在等你先开口"
+                description="问一个你真的好奇的问题，星星会慢慢回答。你也可以点下面的小问题开始。"
+              />
           ) : null}
 
           {!hasHydrated ? (
@@ -463,11 +459,8 @@ export function ChatExperience({ body, knowledgeSummary, initialRuntime }: ChatE
         <form onSubmit={handleSubmit} className="mt-5 space-y-3">
           <div className="flex items-start justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs leading-5 text-slate-300">
             <p>
-              如果浏览器支持，可以用声音提问，也可以让星星把回答读出来；不支持时，文字聊天一样好用。
+              你可以打字聊天，也可以试试用声音提问和听星星说话。
             </p>
-            <span className="shrink-0 rounded-full border border-sky-200/10 bg-sky-300/10 px-3 py-1 text-sky-100">
-              {supportsVoiceInput || supportsVoicePlayback ? "语音可用" : "文字模式"}
-            </span>
           </div>
 
           <textarea
@@ -479,7 +472,7 @@ export function ChatExperience({ body, knowledgeSummary, initialRuntime }: ChatE
             className="w-full rounded-3xl border border-white/10 bg-slate-950/40 px-4 py-4 text-sm text-white outline-none placeholder:text-slate-500"
           />
           <div className="flex items-center justify-between gap-3">
-            <p className="text-xs text-slate-400">最近 20 条对话只保存在这台设备里，方便你下次继续聊。</p>
+            <p className="text-xs text-slate-400">聊天记录会留在这里，下次来还能接着聊。</p>
             <div className="flex shrink-0 items-center gap-2">
               {supportsVoiceInput ? (
                 <button
