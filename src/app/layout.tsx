@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { HorizontalDragScroll } from "@/components/horizontal-drag-scroll";
+import { BottomNav } from "@/components/bottom-nav";
+import { ScrollToTop } from "@/components/scroll-to-top";
+import { PageTransition } from "@/components/page-transition";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body>
-        {children}
+        <PageTransition>{children}</PageTransition>
         <HorizontalDragScroll />
+        <BottomNav />
+        <ScrollToTop />
       </body>
     </html>
   );
