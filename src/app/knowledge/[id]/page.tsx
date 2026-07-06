@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { OfficialKnowledgePanel } from "@/components/official-knowledge-panel";
+import { PageHeader } from "@/components/page-header";
 import { celestialBodies } from "@/data/celestial-bodies";
 import { classroomModules } from "@/data/classroom-modules";
 import { knowledgeCards } from "@/data/knowledge-cards";
@@ -28,31 +29,22 @@ export default async function KnowledgePage({ params }: KnowledgePageProps) {
   const relatedModules = classroomModules.filter((module) => module.relatedBodyIds.includes(body.id));
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md px-5 pb-12 pt-8">
-      <a href={`/chat/${body.id}`} className="text-sm text-sky-200">
-        ← 返回对话页
-      </a>
-
-      <section className="mt-4 rounded-[2rem] border border-white/10 bg-white/8 p-6 backdrop-blur">
-        <div className="flex items-start gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/10 text-4xl">
-            {body.avatar}
-          </div>
-          <div className="min-w-0">
-            <p className="text-sm text-sky-200">知识卡片</p>
-            <h1 className="text-3xl font-semibold text-white">{body.name}</h1>
-            <p className="mt-2 text-sm leading-6 text-slate-200/90">{card.summary}</p>
-          </div>
-        </div>
-
-        <div className="mt-5 flex flex-wrap gap-2">
+    <main className="mx-auto min-h-screen w-full max-w-md px-5 pb-24 pt-8">
+      <PageHeader
+        label="知识卡片"
+        title={body.name}
+        description={card.summary}
+        backHref={`/chat/${body.id}`}
+        accent="sky"
+      >
+        <div className="flex flex-wrap gap-2">
           {body.tags.map((tag) => (
             <span key={tag} className="rounded-full border border-sky-200/10 bg-sky-300/10 px-3 py-1 text-xs text-sky-100">
               {tag}
             </span>
           ))}
         </div>
-      </section>
+      </PageHeader>
 
       <section className="mt-5 space-y-4">
         <OfficialKnowledgePanel bodyId={body.id} bodyName={body.name} />

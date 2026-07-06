@@ -4,7 +4,7 @@ const highlights = [
   {
     icon: "🎲",
     title: "随机抽一颗新星体",
-    description: "从官方天文资料里抽取宇宙朋友，生成专属小性格。",
+    description: "认识一位新的宇宙朋友，听听它的专属小故事。",
   },
   {
     icon: "💬",
@@ -29,9 +29,9 @@ const highlights = [
 ];
 
 const journey = [
-  "随机抽一颗新星体",
-  "听它介绍自己",
-  "把喜欢的星体收进记忆库",
+  { emoji: "🎲", text: "随机抽一颗新星体" },
+  { emoji: "👂", text: "听它介绍自己" },
+  { emoji: "💾", text: "把喜欢的星体收进记忆库" },
 ];
 
 export default function Home() {
@@ -77,44 +77,44 @@ export default function Home() {
               href="/explore"
               className="rounded-2xl bg-amber-300 px-4 py-4 text-center text-base font-semibold text-slate-950 transition hover:bg-amber-200"
             >
-              随机抽一颗星
+              🎲 随机抽一颗星
             </a>
             <div className="grid grid-cols-2 gap-3">
               <a
                 href="/chat?category=featured"
                 className="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-center text-sm font-medium text-white"
               >
-                星星聊天
+                💬 星星聊天
               </a>
               <a
                 href="/memory"
                 className="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-center text-sm font-medium text-white"
               >
-                星体记忆库
+                🌟 星体记忆库
               </a>
               <a
                 href="/wish"
                 className="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-center text-sm font-medium text-white"
               >
-                生成愿望卡
+                🎨 生成愿望卡
               </a>
               <a
                 href="/wish-wall"
                 className="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-center text-sm font-medium text-white"
               >
-                愿望墙
+                🌈 愿望墙
               </a>
               <a
                 href="/library"
                 className="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-center text-sm font-medium text-white"
               >
-                星空图鉴
+                📚 星空图鉴
               </a>
               <a
                 href="/classroom"
                 className="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-center text-sm font-medium text-white"
               >
-                星空课堂
+                📖 星空课堂
               </a>
             </div>
           </div>
@@ -125,9 +125,11 @@ export default function Home() {
         <p className="text-sm font-medium text-amber-100">今天可以这样玩</p>
         <div className="mt-3 grid gap-2">
           {journey.map((step, index) => (
-            <div key={step} className="rounded-2xl bg-white/10 px-4 py-3">
-              <span className="mr-2 text-amber-200">{index + 1}.</span>
-              {step}
+            <div key={step.text} className="flex items-center gap-3 rounded-2xl bg-white/10 px-4 py-3">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-300/20 text-sm">
+                {step.emoji}
+              </span>
+              <span>{step.text}</span>
             </div>
           ))}
         </div>
@@ -153,9 +155,9 @@ export default function Home() {
       </section>
 
       <section className="mt-6 rounded-3xl border border-emerald-200/20 bg-emerald-200/10 p-5 text-sm leading-7 text-emerald-50">
-        <p className="text-sm font-medium text-emerald-100">小小安全约定</p>
+        <p className="text-sm font-medium text-emerald-100">🛡️ 小小安全约定</p>
         <p className="mt-2">
-          不写真实姓名、地址、电话和学校。愿望墙只保存在这台设备里，适合在家里或课堂上展示给身边的人看。
+          不写真名、地址、电话和学校。愿望墙里的内容只在这里，可以和家人同学一起看。
         </p>
       </section>
     </main>

@@ -19,7 +19,7 @@ export default async function MemoryChatPage({ params }: MemoryChatPageProps) {
         <p className="text-sm text-sky-200">抽到的星星也能聊天</p>
         <h1 className="mt-2 text-3xl font-semibold text-white">和记忆库里的星体说话</h1>
         <p className="mt-3 text-sm leading-7 text-slate-200/90">
-          这颗星来自你之前随机抽星收录的本机记忆。它会根据已保存的科普资料和专属性格回答你。
+          这是你之前认识的星星朋友，它会记得自己的故事来回答你。
         </p>
       </section>
 

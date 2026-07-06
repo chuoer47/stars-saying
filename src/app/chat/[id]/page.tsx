@@ -64,12 +64,7 @@ export default async function ChatDetailPage({ params }: ChatDetailPageProps) {
         </div>
 
         <div className="mt-4 rounded-3xl border border-sky-200/10 bg-sky-300/10 p-4 text-sm leading-7 text-sky-50">
-          <div className="flex flex-wrap items-center gap-2">
-            <p className="text-sm text-sky-200">当前回答方式</p>
-            <span className="rounded-full border border-sky-100/20 bg-white/10 px-3 py-1 text-xs text-white">
-              {runtime.label}
-            </span>
-          </div>
+          <p className="text-sm text-sky-200">当前回答方式</p>
           <p className="mt-2">{runtime.detail}</p>
         </div>
       </section>
